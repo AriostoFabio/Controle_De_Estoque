@@ -1,3 +1,17 @@
+'''
+NOTA: 
+    ADICIONAR FUNÇÃO COM DATA ATUAL
+
+import datetime
+from datetime import date
+
+x = datetime.datetime.now()
+
+print(x.strftime("%d/%m/%Y %H:%M"))#dia do mês
+
+
+'''
+
 import tkinter as tk
 from tkinter import simpledialog, messagebox
 import sqlite3
