@@ -8,10 +8,7 @@ from datetime import date
 x = datetime.datetime.now()
 
 print(x.strftime("%d/%m/%Y %H:%M"))#dia do mês
-
-
 '''
-
 import tkinter as tk
 from tkinter import simpledialog, messagebox
 import sqlite3
@@ -19,8 +16,8 @@ import sqlite3
 # conexão com o DB
 conn = sqlite3.connect('DB_ESTOQUE.db')
 c = conn.cursor()
-# c.execute('''CREATE TABLE if not exists estoque
-#              (id INTEGER PRIMARY KEY, nome text, quantidade text) ''')
+c.execute('''CREATE TABLE if not exists estoque
+        (id INTEGER PRIMARY KEY, nome text, quantidade text) ''')
 
 # Interface e funções
 root = tk.Tk()
@@ -72,18 +69,6 @@ def alterar():
         linha_att = (c.execute(f"SELECT * FROM estoque WHERE id = ?", (id_digitado,)).fetchone())
         messagebox.showinfo("Info", f'Valor atualizado com sucesso!\n {linha_att}')
 
-# def deletar():
-#     id_digitado = input('Digite o ID do produto que deseja alterar: ')
-#     comando_digitado = c.execute(f'SELECT * FROM estoque WHERE id="{id_digitado}"')
-#     linha = comando_digitado.fetchone()
-#     user_enter = input(f'Deseja mesmo deletar{linha}?[SIM][NÃO]')
-#     if user_enter == 'sim':
-#         c.execute(f"DELETE FROM estoque WHERE id ={id_digitado};")
-#         messagebox.showinfo(f'Deletar','O item foi deletado com sucesso')
-#     else:
-#         print('Comando encerrado.')
-#     conn.commit()
-
 def deletar():
     id_inserido = simpledialog.askstring("Inserir valor", "Digite o Id que deseja deletar:")
     comand_delete = c.execute(f'SELECT * FROM estoque WHERE id={id_inserido}')
@@ -103,8 +88,6 @@ def deletar():
     data_inserido = simpledialog.askstring("Inserir valor", "DATA DE INSERÇÃO:")
     qtd_inserido = simpledialog.askstring("Inserir valor", "QUANTIDADE DE INSERÇÃO:")
 
-
-
 def sair():
     btn_sair = messagebox.askquestion('','Deseja mesmo sair ?')
     if btn_sair == 'yes':
@@ -112,7 +95,6 @@ def sair():
         conn.commit()
         conn.close()
         root.quit()
-
 
 # Botões
 menu_frame = tk.Frame(root)
