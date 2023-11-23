@@ -1,23 +1,14 @@
-'''
-NOTA: 
-    ADICIONAR FUNÇÃO COM DATA ATUAL
-
-import datetime
-from datetime import date
-
-x = datetime.datetime.now()
-
-print(x.strftime("%d/%m/%Y %H:%M"))#dia do mês
-'''
 import tkinter as tk
 from tkinter import simpledialog, messagebox
 import sqlite3
+import datetime
+from datetime import date
 
 # conexão com o DB
 conn = sqlite3.connect('DB_ESTOQUE.db')
 c = conn.cursor()
 c.execute('''CREATE TABLE if not exists estoque
-        (id INTEGER PRIMARY KEY, nome text, quantidade text) ''')
+             (id INTEGER PRIMARY KEY, nome text, quantidade text) ''')
 
 # Interface e funções
 root = tk.Tk()
@@ -25,18 +16,24 @@ root.title("Sistema de Estoque")
 
 root.option_add("*Font", "Arial 12")
 
+#cria uma data
+def data_atual():
+    x = datetime.datetime.now()
+    return x.strftime("%d/%m/%Y %H:%M")
+
 def vertabela():
     resultado = c.execute('SELECT * FROM estoque')
     text_output.delete(1.0, tk.END)
     for item in resultado.fetchall():
         # Converte o item[1] (nome do produto) para maiúsculas
-        line = "|{:<3}|{:<30}|{:<5}|".format(item[0], item[1].upper(), item[2], item[3])
+        line = "|{:<5}|{:<30}|{:<5}|{:<1}".format(item[0], item[1].upper(), item[2], item[3])
         text_output.insert(tk.END, line + '\n')
 
 def inserirvalor():
     id_inserido = simpledialog.askstring("Inserir valor", "ID:")
     item_inserido = simpledialog.askstring("Inserir valor", "ITEM:")
-    data_inserido = simpledialog.askstring("Inserir valor", "DATA DE INSERÇÃO:")
+    data_inserido = data_atual()
+    # data_inserido = simpledialog.askstring("Inserir valor", "DATA DE INSERÇÃO:")
     qtd_inserido = simpledialog.askstring("Inserir valor", "QUANTIDADE DE INSERÇÃO:")
     
     try:
@@ -116,7 +113,7 @@ btn_sair = tk.Button(menu_frame, text="Sair", command=sair, width=15, height=2)
 btn_sair.grid(row=0, column=3, padx=5)
 
 text_output = tk.Text(root, width=50, height=20)
-text_output = tk.Text(root, width=50, height=20, font=("Courier New", 12))
+text_output = tk.Text(root, width=60, height=20, font=("Courier New", 12))
 text_output.pack(pady=3, padx=15)
 
 text_output.tag_configure('center', justify='center') 
