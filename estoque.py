@@ -2,9 +2,6 @@
 - criar uma função que deixe os items abaixo de uma determinada quantidade em vermelho
 - possibilidade de essa quantidade minima ser editada
 - criar um filtro para mostrar quantidades acima e abaixo de um numero x
-
--arrumar a função ver tabela, fazer com que a tabela sempre seja mostrada, e atualizada a cada função executada
-
 '''
 import tkinter as tk
 from tkinter import simpledialog, messagebox
