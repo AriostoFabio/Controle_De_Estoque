@@ -36,6 +36,10 @@ def vertabela():
         # Converte o item[1] (nome do produto) para maiúsculas
         line = "|{:<2}|{:<25}|{:<3}|{:<5}".format(item[0], item[1].upper(), item[2], item[3])
         text_output.insert(tk.END, line + '\n')
+        if int(item[2]) < 50:
+            text_output.insert(tk.END, line + '\n', 'low')
+        else:
+            text_output.insert(tk.END, line + '\n')
 
 def inserirvalor():
     id_inserido = simpledialog.askstring("Inserir valor", "ID:")
@@ -50,6 +54,8 @@ def inserirvalor():
     except Exception as e:
         messagebox.showerror("Erro","Não foi possivel inserir os valores !")
         print(str(e))
+    
+    vertabela()
     conn.commit()
 
 def alterar():
@@ -73,6 +79,9 @@ def alterar():
         c.execute(f"UPDATE estoque SET data_add=? WHERE id=", (new_data, id_digitado))
         linha_att = (c.execute(f"SELECT * FROM estoque WHERE id = ?", (id_digitado,)).fetchone())
         messagebox.showinfo("Info", f'Valor atualizado com sucesso!\n {linha_att}')
+      
+        vertabela()
+        conn.commit()
 
 def deletar():
     id_inserido = simpledialog.askstring("Inserir valor", "Digite o Id que deseja deletar:")
@@ -93,6 +102,9 @@ def deletar():
     data_inserido = simpledialog.askstring("Inserir valor", "DATA DE INSERÇÃO:")
     qtd_inserido = simpledialog.askstring("Inserir valor", "QUANTIDADE DE INSERÇÃO:")
 
+    vertabela()
+    conn.commit()
+
 def sair():
     btn_sair = messagebox.askquestion('','Deseja mesmo sair ?')
     if btn_sair == 'yes':
@@ -104,9 +116,6 @@ def sair():
 # Botões
 menu_frame = tk.Frame(root)
 menu_frame.pack(pady=0, padx=0, anchor="n")
-
-btn_ver = tk.Button(menu_frame, text="Mostrar Tabela", command=vertabela, width=15, height=2)
-btn_ver.grid(row=0, column=0, padx=5)
 
 btn_inserir = tk.Button(menu_frame, text="Inserir", command=inserirvalor, width=15, height=2)
 btn_inserir.grid(row=0, column=1, padx=5)
@@ -125,5 +134,7 @@ text_output.pack(pady=3, padx=15)
 
 text_output.tag_configure('center', justify='center') 
 
+text_output.tag_configure('low', background='red')
+vertabela()
 root.mainloop()
 conn.commit()
