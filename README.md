@@ -1,2 +1,2 @@
 # Controle_De_Estoque
-Um projeto simples para entender melhor o uso do Sqlite com python, tambem usando um pouco de interfaces gráficas com Tkinter
+Um projeto simples de um sitema CRUD tendo em vista colocar em prática meus conhecimentos em desenvolvimento backend usando Sqlite com python, e tambem interfaces gráficas com Tkinter. O Projeto trata-se de um controle de estoque/varejo, sendo possível analisar dados como, nome, data de inserção, e quantidade, contando com funções as funções básicas, read, update, e delete.
