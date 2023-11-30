@@ -30,9 +30,8 @@ def vertabela():
     resultado = c.execute('SELECT * FROM estoque')
     text_output.delete(1.0, tk.END)
     for item in resultado.fetchall():
-        # Converte o item[1] (nome do produto) para maiúsculas
+        #Formata a exibição dos elementos da lista
         line = "|{:<2}|{:<25}|{:<3}|{:<5}".format(item[0], item[1].upper(), item[2], item[3])
-        text_output.insert(tk.END, line + '\n')
         if int(item[2]) < 50:
             text_output.insert(tk.END, line + '\n', 'low')
         else:
